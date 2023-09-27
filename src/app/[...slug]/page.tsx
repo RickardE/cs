@@ -81,7 +81,7 @@ export default async function Page({ params }: Props) {
       h3: ({ children }) => <h3 className="text-3xl text-red">{children}</h3>,
       h4: ({ children }) => <h4 className="text-xl text-red">{children}</h4>,
       normal: ({ children }) => (
-        <span className="w-6/12 sm:w-10/12 md:w-10/12 block leading-9 text-xl text-mistyrose">
+        <span className="w-10/12 sm:w-10/12 md:w-10/12 block leading-9 text-xl text-mistyrose">
           {children}
         </span>
       ),
@@ -115,7 +115,7 @@ export default async function Page({ params }: Props) {
           return (
             <div className="h-screen w-full pt-32 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {c.images.map((img, i) => (
-                <div className="w-full h-auto" key={i}>
+                <div style={{minHeight: "auto"}} key={i}>
                   <CustomImage
                     url={img.asset._ref}
                     name={img.name}
