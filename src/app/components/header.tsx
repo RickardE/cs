@@ -59,10 +59,7 @@ const Header = ({ nav, url }: IProps) => {
     return () => ctx.clear();
   });
 
-
-
-  nav.sort((a, b) => b.order - a.order).map((p) => console.log(p.pageSlug))
-
+  nav.sort((a, b) => a.order - b.order).map((p) => console.log(p.pageSlug));
 
   return (
     <header className="fixed text-red w-full top-0 h-32 z-30 bg-black flex flex-col justify-center">
@@ -116,36 +113,6 @@ const Header = ({ nav, url }: IProps) => {
                   {n.pageTitle}
                 </Link>
               ))}
-
-   
-            {/* <Link
-              onClick={() => setOpen(!open)}
-              className="hover:underline block py-3 "
-              href={"about"}
-            >
-              Om mig
-            </Link>
-            <Link
-              onClick={() => setOpen(!open)}
-              className="hover:underline block py-3"
-              href={"about"}
-            >
-              Tidigare utställningar
-            </Link>
-            <Link
-              onClick={() => setOpen(!open)}
-              className="hover:underline block py-3"
-              href={"about"}
-            >
-              Galleri
-            </Link>
-            <Link
-              onClick={() => setOpen(!open)}
-              className="hover:underline block py-3"
-              href={"about"}
-            >
-              Kontakt
-            </Link> */}
           </div>
         </div>
       </nav>
