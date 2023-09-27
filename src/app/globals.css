@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --black: rgb(28, 28, 28);
+  --red: #bb000e;
+}
+
+
+html,
+body,
+body > div:first-child {
+  min-height: 100%;
+  margin: 0;
+  font-family: "Georgia";
+}
