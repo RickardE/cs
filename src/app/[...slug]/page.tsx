@@ -113,16 +113,19 @@ export default async function Page({ params }: Props) {
 
         case "gallery":
           return (
-            <div className="h-screen w-full pt-32 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              {c.images.map((img, i) => (
-                <div style={{minHeight: "auto"}} key={i}>
+            <div style={{ minHeight: "100%", height: "auto" }} key={i}>
+              <div className="h-full w-full pt-32 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 border-b border-red">
+                {c.images.map((img, i) => (
                   <CustomImage
+                    key={i}
                     url={img.asset._ref}
                     name={img.name}
                     description={img.description}
                   ></CustomImage>
-                </div>
-              ))}
+                ))}
+                <div className="clear-both"></div>
+              </div>
+              <div className="clear-both"></div>
             </div>
           );
         default:
