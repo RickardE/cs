@@ -84,7 +84,7 @@ export default async function Page({ params }: Props) {
       switch (c._type) {
         case "container":
           return (
-            <div className="h-screen w-full flex flex-column items-center border-b border-red">
+            <div className="h-full py-8 w-full flex flex-column items-center border-b border-red">
               <div style={{minHeight: "auto"}}>
                 <PortableText
                   value={c.content}
