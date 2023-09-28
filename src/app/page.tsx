@@ -50,15 +50,14 @@ export async function generateMetadata(
 }
 
 export default async function Page({ params }: Props) {
-  
-
-
   const Page: Page[] = await client.fetch(
     `*[_type == "page" && pageSlug == "/"]`,
-    { next: { tag: "slug" } }
+    { next: { revalidate: 1 } }
   );
 
-  revalidatePath(params.slug!);
+  
+
+  console.log(Page);
 
   if (Page.length === 0) {
     console.log(404);
@@ -90,7 +89,7 @@ export default async function Page({ params }: Props) {
       switch (c._type) {
         case "container":
           return (
-            <div className="h-full py-8 w-full flex flex-column items-center border-b border-red">
+            <div key={i} className="h-full py-8 w-full flex flex-column items-center border-b border-red">
               <div style={{ minHeight: "auto" }}>
                 <PortableText
                   value={c.content}
@@ -101,8 +100,8 @@ export default async function Page({ params }: Props) {
           );
         case "background":
           return (
-            <div className="h-screen w-full flex flex-column items-center border-b border-red text-mistyrose">
-              <p key={i}>{c.link}</p>
+            <div key={i} className="h-screen w-full flex flex-column items-center border-b border-red text-mistyrose">
+              <p>{c.link}</p>
             </div>
           );
         default:
