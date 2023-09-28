@@ -2,6 +2,7 @@ import client from "@/lib/client";
 import { notFound } from "next/navigation";
 import type { ResolvingMetadata, Metadata } from "next";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
+import { revalidatePath } from "next/cache";
 
 type Block = {
   _type: string;
@@ -49,10 +50,15 @@ export async function generateMetadata(
 }
 
 export default async function Page({ params }: Props) {
+  
+
+
   const Page: Page[] = await client.fetch(
     `*[_type == "page" && pageSlug == "/"]`,
-    { next: 1 }
+    { next: { tag: "slug" } }
   );
+
+  revalidatePath(params.slug!);
 
   if (Page.length === 0) {
     console.log(404);
@@ -85,7 +91,7 @@ export default async function Page({ params }: Props) {
         case "container":
           return (
             <div className="h-full py-8 w-full flex flex-column items-center border-b border-red">
-              <div style={{minHeight: "auto"}}>
+              <div style={{ minHeight: "auto" }}>
                 <PortableText
                   value={c.content}
                   components={portableTextComponents}
