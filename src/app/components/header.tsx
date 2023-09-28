@@ -59,8 +59,6 @@ const Header = ({ nav, url }: IProps) => {
     return () => ctx.clear();
   });
 
-  nav.sort((a, b) => a.order - b.order).map((p) => console.log(p.pageSlug));
-
   return (
     <header className="fixed text-red w-full top-0 h-32 z-30 bg-black flex flex-col justify-center">
       <div className="grid grid-flow-col justify-stretch absolute w-10/12 mx-auto left-0 right-0 z-50 items-center">

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { ResolvingMetadata, Metadata } from "next";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
 import CustomImage from "../components/image";
+import { revalidatePath } from "next/cache";
 
 type Block = {
   _type: string;
@@ -41,9 +42,9 @@ export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
+  revalidatePath("/" + params.slug!);
   const Page: Page[] = await client.fetch(
-    `*[_type == "page" && pageSlug == "${params.slug}"]`,
-    { next: 0.5 }
+    `*[_type == "page" && pageSlug == "${params.slug}"]`
   );
 
   const page = Page[0];
@@ -60,9 +61,9 @@ export async function generateMetadata(
 }
 
 export default async function Page({ params }: Props) {
+  revalidatePath(params.slug!);
   const Page: Page[] = await client.fetch(
-    `*[_type == "page" && pageSlug == "${params.slug}"]`,
-    { next: 1 }
+    `*[_type == "page" && pageSlug == "${params.slug}"]`
   );
 
   if (Page.length === 0) {

@@ -18,15 +18,11 @@ type Page = {
 };
 
 const getHeader = async () => {
-  return await client.fetch(`*[_type == "header"]`, {
-    revalidate: { next: 0.1 },
-  });
+  return await client.fetch(`*[_type == "header"]`, {});
 };
 
 const getNav = async () => {
-  return await client.fetch(`*[_type == "page"]`, {
-    revalidate: { next: 0.1 },
-  });
+  return await client.fetch(`*[_type == "page"]`, {});
 };
 
 export default async function RootLayout({

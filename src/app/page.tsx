@@ -31,9 +31,9 @@ export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
+  revalidatePath("/");
   const Page: Page[] = await client.fetch(
-    `*[_type == "page" && pageSlug == "/"]`,
-    { next: 0.5 }
+    `*[_type == "page" && pageSlug == "/"]`
   );
 
   const page = Page[0];
@@ -50,14 +50,10 @@ export async function generateMetadata(
 }
 
 export default async function Page({ params }: Props) {
+  revalidatePath("/");
   const Page: Page[] = await client.fetch(
-    `*[_type == "page" && pageSlug == "/"]`,
-    { next: { revalidate: 1 } }
+    `*[_type == "page" && pageSlug == "/"]`
   );
-
-  
-
-  console.log(Page);
 
   if (Page.length === 0) {
     console.log(404);
@@ -89,7 +85,10 @@ export default async function Page({ params }: Props) {
       switch (c._type) {
         case "container":
           return (
-            <div key={i} className="h-full py-8 w-full flex flex-column items-center border-b border-red">
+            <div
+              key={i}
+              className="h-full py-8 w-full flex flex-column items-center border-b border-red"
+            >
               <div style={{ minHeight: "auto" }}>
                 <PortableText
                   value={c.content}
@@ -100,7 +99,10 @@ export default async function Page({ params }: Props) {
           );
         case "background":
           return (
-            <div key={i} className="h-screen w-full flex flex-column items-center border-b border-red text-mistyrose">
+            <div
+              key={i}
+              className="h-screen w-full flex flex-column items-center border-b border-red text-mistyrose"
+            >
               <p>{c.link}</p>
             </div>
           );
