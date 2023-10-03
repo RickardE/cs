@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { ResolvingMetadata, Metadata } from "next";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
 import { revalidatePath } from "next/cache";
+import Gallery from "./components/gallery";
 
 type Block = {
   _type: string;
@@ -71,9 +72,9 @@ export default async function Page({ params }: Props) {
       h3: ({ children }) => <h3 className="text-3xl text-red">{children}</h3>,
       h4: ({ children }) => <h4 className="text-xl text-red">{children}</h4>,
       normal: ({ children }) => (
-        <span className="w-10/12 sm:w-10/12 md:w-6/12 lg:6/12 xl:6/12 block leading-9 text-xl text-mistyrose">
+        <div className="xl:w-6/12 sm:w-10/12 md:w-10/12 block text-lg leading-10 text-mistyrose pr-6">
           {children}
-        </span>
+        </div>
       ),
     },
   };
@@ -87,7 +88,7 @@ export default async function Page({ params }: Props) {
           return (
             <div
               key={i}
-              className="h-full py-8 w-full flex flex-column items-center border-b border-red"
+              className="h-auto min-h-screen py-8 w-full flex flex-column items-center border-b border-red"
             >
               <div style={{ minHeight: "auto" }}>
                 <PortableText
@@ -101,7 +102,7 @@ export default async function Page({ params }: Props) {
           return (
             <div
               key={i}
-              className="h-screen w-full flex flex-column items-center border-b border-red text-mistyrose"
+              className="h-auto min-h-screen w-full flex flex-column items-center border-b border-red text-mistyrose"
             >
               <p>{c.link}</p>
             </div>
@@ -115,7 +116,7 @@ export default async function Page({ params }: Props) {
 
   if (page.pageBuilder && page.pageBuilder.length > 0) {
     return (
-      <div className="flex-1 flex-col relative w-10/12 mx-auto">
+      <div className="relative flex flex-col min-h-screen relative w-10/12 mx-auto">
         {buildPage(page)}
       </div>
     );

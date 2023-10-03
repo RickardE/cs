@@ -101,16 +101,18 @@ const Header = ({ nav, url }: IProps) => {
         <div className="relative w-10/12 mx-auto">
           <div className="text-left text-3xl sm:text-4xl md:text-5xl lg:text-7xl">
             {nav &&
-              nav.map((n, i) => (
-                <Link
-                  key={i}
-                  onClick={() => setOpen(!open)}
-                  className="hover:underline block py-3"
-                  href={`/${n.pageSlug}`}
-                >
-                  {n.pageTitle}
-                </Link>
-              ))}
+              nav
+                .sort((a, b) => a.order - b.order)
+                .map((n, i) => (
+                  <Link
+                    key={i}
+                    onClick={() => setOpen(!open)}
+                    className="hover:underline block py-3"
+                    href={`/${n.pageSlug}`}
+                  >
+                    {n.pageTitle}
+                  </Link>
+                ))}
           </div>
         </div>
       </nav>

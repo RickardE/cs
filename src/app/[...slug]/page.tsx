@@ -4,6 +4,7 @@ import type { ResolvingMetadata, Metadata } from "next";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
 import CustomImage from "../components/image";
 import { revalidatePath } from "next/cache";
+import Gallery from "../components/gallery";
 
 type Block = {
   _type: string;
@@ -82,9 +83,9 @@ export default async function Page({ params }: Props) {
       h3: ({ children }) => <h3 className="text-3xl text-red">{children}</h3>,
       h4: ({ children }) => <h4 className="text-xl text-red">{children}</h4>,
       normal: ({ children }) => (
-        <span className="w-10/12 sm:w-10/12 md:w-10/12 block leading-9 text-xl text-mistyrose">
+        <div className="xl:w-6/12 sm:w-10/12 md:w-10/12 block text-lg leading-10 text-mistyrose pr-6">
           {children}
-        </span>
+        </div>
       ),
     },
   };
@@ -96,7 +97,7 @@ export default async function Page({ params }: Props) {
       switch (c._type) {
         case "container":
           return (
-            <div className="h-full py-8 w-full flex flex-column items-center border-b border-red">
+            <div className="h-auto min-h-screen py-8 w-full flex flex-column items-center border-b border-red">
               <div style={{ minHeight: "auto" }}>
                 <PortableText
                   value={c.content}
@@ -107,26 +108,15 @@ export default async function Page({ params }: Props) {
           );
         case "background":
           return (
-            <div className="h-screen w-full flex flex-column items-center border-b border-red text-mistyrose">
+            <div className="h-auto min-h-screen w-full flex flex-column items-center border-b border-red text-mistyrose">
               <p key={i}>{c.link}</p>
             </div>
           );
 
         case "gallery":
           return (
-            <div style={{ minHeight: "100%", height: "auto" }} key={i}>
-              <div className="h-full w-full pt-32 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 border-b border-red">
-                {c.images.map((img, i) => (
-                  <CustomImage
-                    key={i}
-                    url={img.asset._ref}
-                    name={img.name}
-                    description={img.description}
-                  ></CustomImage>
-                ))}
-                <div className="clear-both"></div>
-              </div>
-              <div className="clear-both"></div>
+            <div className="min-h-screen pt-8 block mt-24" key={i}>
+              <Gallery image={c.images}></Gallery>
             </div>
           );
         default:
@@ -138,7 +128,7 @@ export default async function Page({ params }: Props) {
 
   if (page.pageBuilder && page.pageBuilder.length > 0) {
     return (
-      <div className="flex-1 flex-col relative w-10/12 mx-auto">
+      <div className="relative flex flex-col min-h-screen relative w-10/12 mx-auto">
         {buildPage(page)}
       </div>
     );

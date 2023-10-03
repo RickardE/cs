@@ -7,11 +7,20 @@
   --red: #bb000e;
 }
 
+@font-face {
+  font-family: Sansita-Regular;
+  src: url(/fonts/Sansita-Regular.ttf);
+}
+
+
 
 html,
 body,
-body > div:first-child {
+body > div:first-child,
+div#__next,
+div#__next > div {
   min-height: 100%;
+  height: 100%;
   margin: 0;
-  font-family: "Georgia";
+  font-family: "Sansita-Regular";
 }
