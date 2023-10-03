@@ -108,8 +108,8 @@ export default async function Page({ params }: Props) {
           );
         case "background":
           return (
-            <div className="h-auto min-h-screen w-full flex flex-column items-center border-b border-red text-mistyrose">
-              <p key={i}>{c.link}</p>
+            <div key={i} className="h-auto min-h-screen w-full flex flex-column items-center border-b border-red text-mistyrose">
+              <p>{c.link}</p>
             </div>
           );
 

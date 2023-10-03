@@ -23,6 +23,7 @@ const config: Config = {
         black: "#1c1c1c",
         mistyrose: "#F5E3E0",
         blacktransparent: "rgba(0, 0, 0, 0.5)",
+        whitetransparent: "rgba(255, 255, 255, 0.5)",
       },
       borderColor: {
         red: "#95190C",

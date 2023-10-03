@@ -60,16 +60,16 @@ const CurrentImage = ({
 
   return (
     <div
-      className={`text-black fixed overflow-scroll min-h-full z-40 bg-white top-0 bottom-0 left-0 right-0 ${
+      className={`text-black fixed overflow-scroll min-h-full z-40 bg-white top-0 bottom-0 left-0 right-0 flex flex-col items-center ${
         open ? "block" : "hidden"
       }`}
     >
-      <div className="max-w-fit h-full overflow-scroll flex flex-col justify-center items-center">
+      <div className="relative my-2 w-fit h-auto w-auto overflow-hidden flex flex-col justify-center items-center">
         <img
+          className="max-h-screen w-auto mx-auto"
           onClick={() => close()}
           src={getUrl(asset._ref).url()}
           loading="lazy"
-          style={{ maxWidth: "60%" }}
           decoding="async"
           width={"auto"}
           height={"auto"}
@@ -79,8 +79,10 @@ const CurrentImage = ({
           ref={element}
         />
 
-        <div className="text-center w-3/5 block text-2xl">{name}</div>
-        <div className="text-center w-3/5 block">{description}</div>
+        <div className="absolute bottom-0 bg-whitetransparent w-full flex flex-col items-center justify-center">
+          <div className="text-center w-6/12 block text-2xl">{name}</div>
+          <div className="text-center w-6/12 block">{description}</div>
+        </div>
       </div>
 
       <div
@@ -170,13 +172,13 @@ const Gallery = ({ image }: IProps) => {
     const distance = e.changedTouches[0].clientX - startX;
 
     if (distance > 0) {
-      console.log("right");
-      if (currentImage < image.length - 1) {
-        setCurrentImage(currentImage + 1);
-      }
-    } else if (distance < 0) {
       if (currentImage > 0) {
         setCurrentImage(currentImage - 1);
+      }
+      console.log("right");
+    } else if (distance < 0) {
+      if (currentImage < image.length - 1) {
+        setCurrentImage(currentImage + 1);
       }
     }
   };
