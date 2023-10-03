@@ -60,19 +60,19 @@ const CurrentImage = ({
 
   return (
     <div
-      className={`text-black fixed overflow-scroll min-h-full z-40 bg-white top-0 bottom-0 left-0 right-0 flex flex-col items-center ${
+      className={`text-black fixed overflow-scroll w-full z-40 bg-white top-0 bottom-0 left-0 right-0 flex flex-col items-center ${
         open ? "block" : "hidden"
       }`}
     >
-      <div className="relative my-2 w-fit h-auto w-auto overflow-hidden flex flex-col justify-center items-center">
+      <div className="relative h-full w-full overflow-hidden flex flex-col justify-center items-center">
         <img
-          className="max-h-screen w-auto mx-auto"
+          className="w-full h-full mx-auto object-cover"
           onClick={() => close()}
           src={getUrl(asset._ref).url()}
           loading="lazy"
           decoding="async"
-          width={"auto"}
-          height={"auto"}
+          width={"100%"}
+          height={"100%"}
           onTouchStart={(e) => onTouchStart(e)}
           onTouchMove={(e) => onTouchMove(e)}
           onTouchEnd={(e) => onTouchEnd(e)}
