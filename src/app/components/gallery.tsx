@@ -92,8 +92,12 @@ const CurrentImage = ({
         </div>
 
         <div className="absolute bottom-0 bg-whitetransparent w-full flex flex-col items-center justify-center">
-          <div className="text-center w-10/12 xl:w-6/12 block text-2xl">{name}</div>
-          <div className="text-center w-10/12 xl:w-6/12 block">{description}</div>
+          <div className="text-center w-10/12 xl:w-6/12 block text-2xl">
+            {name}
+          </div>
+          <div className="text-center w-10/12 xl:w-6/12 block">
+            {description}
+          </div>
         </div>
       </div>
 
@@ -200,8 +204,12 @@ const Gallery = ({ image }: IProps) => {
   const [startX, setStartX] = useState<number>(0);
 
   const handleTouchStart = (e: TouchEvent) => {
-    setTouch(true);
-    setStartX(e.touches[0].clientX);
+    if (e.touches.length == 1) {
+      setTouch(true);
+      setStartX(e.touches[0].clientX);
+
+      console.log("Double!");
+    }
   };
 
   const handleTouchMove = (e: TouchEvent) => {};
@@ -209,16 +217,20 @@ const Gallery = ({ image }: IProps) => {
   const handleTouchEnd = (e: TouchEvent) => {
     const distance = e.changedTouches[0].clientX - startX;
 
-    if (distance > 75) {
-      if (currentImage > 0) {
-        setCurrentImage(currentImage - 1);
-      }
-      console.log("right");
-    } else if (distance < -75) {
-      if (currentImage < image.length - 1) {
-        setCurrentImage(currentImage + 1);
+    if (touch && e.touches.length == 1) {
+      if (distance > 75) {
+        if (currentImage > 0) {
+          setCurrentImage(currentImage - 1);
+        }
+        console.log("right");
+      } else if (distance < -75) {
+        if (currentImage < image.length - 1) {
+          setCurrentImage(currentImage + 1);
+        }
       }
     }
+
+    setTouch(false);
   };
 
   const increaseClicks = () => {
