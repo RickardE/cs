@@ -59,11 +59,8 @@ const CurrentImage = ({
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-
-
     setLoading(false);
-
-  }, [])
+  }, []);
 
   return (
     <div
@@ -73,6 +70,7 @@ const CurrentImage = ({
     >
       <div className="relative h-full w-full overflow-hidden flex flex-col justify-center items-center">
         <img
+          hidden={loading}
           className="w-full h-full mx-auto object-cover"
           src={getUrl(asset._ref).url()}
           loading="lazy"
