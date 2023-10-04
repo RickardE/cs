@@ -56,7 +56,14 @@ const CurrentImage = ({
   onTouchMove,
   onTouchEnd,
 }: CurrentImage) => {
-  const element = useRef<HTMLImageElement>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+
+
+    setLoading(false);
+
+  }, [])
 
   return (
     <div
@@ -67,7 +74,6 @@ const CurrentImage = ({
       <div className="relative h-full w-full overflow-hidden flex flex-col justify-center items-center">
         <img
           className="w-full h-full mx-auto object-cover"
-          onClick={() => close()}
           src={getUrl(asset._ref).url()}
           loading="lazy"
           decoding="async"
@@ -76,8 +82,12 @@ const CurrentImage = ({
           onTouchStart={(e) => onTouchStart(e)}
           onTouchMove={(e) => onTouchMove(e)}
           onTouchEnd={(e) => onTouchEnd(e)}
-          ref={element}
+          onLoad={() => setLoading(false)}
         />
+
+        <div hidden={!loading} className="absolute">
+          <img src={"/images/spinner.svg"} />
+        </div>
 
         <div className="absolute bottom-0 bg-whitetransparent w-full flex flex-col items-center justify-center">
           <div className="text-center w-6/12 block text-2xl">{name}</div>
@@ -171,12 +181,12 @@ const Gallery = ({ image }: IProps) => {
   const handleTouchEnd = (e: TouchEvent) => {
     const distance = e.changedTouches[0].clientX - startX;
 
-    if (distance > 0) {
+    if (distance > 75) {
       if (currentImage > 0) {
         setCurrentImage(currentImage - 1);
       }
       console.log("right");
-    } else if (distance < 0) {
+    } else if (distance < -75) {
       if (currentImage < image.length - 1) {
         setCurrentImage(currentImage + 1);
       }
@@ -232,6 +242,12 @@ const Gallery = ({ image }: IProps) => {
       document.removeEventListener("keyup", () => handleKeyUp());
     };
   }, [handleKeyDown, handleKeyUp, increaseClicks]);
+
+  useEffect(() => {
+    open
+      ? (document.body.style.overflow = "hidden")
+      : (document.body.style.overflow = "scroll");
+  });
 
   if (image.length > 0) {
     return (
