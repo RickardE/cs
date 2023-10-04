@@ -43,7 +43,7 @@ export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  revalidatePath("/" + params.slug!);
+  revalidatePath("/");
   const Page: Page[] = await client.fetch(
     `*[_type == "page" && pageSlug == "${params.slug}"]`
   );
@@ -62,7 +62,7 @@ export async function generateMetadata(
 }
 
 export default async function Page({ params }: Props) {
-  revalidatePath(params.slug!);
+  revalidatePath("/");
   const Page: Page[] = await client.fetch(
     `*[_type == "page" && pageSlug == "${params.slug}"]`
   );
