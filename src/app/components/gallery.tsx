@@ -204,11 +204,8 @@ const Gallery = ({ image }: IProps) => {
   const [startX, setStartX] = useState<number>(0);
 
   const handleTouchStart = (e: TouchEvent) => {
-    if (e.touches.length == 1) {
-      setTouch(true);
+    if (e.touches.length === 1) {
       setStartX(e.touches[0].clientX);
-
-      console.log("Double!");
     }
   };
 
@@ -217,16 +214,14 @@ const Gallery = ({ image }: IProps) => {
   const handleTouchEnd = (e: TouchEvent) => {
     const distance = e.changedTouches[0].clientX - startX;
 
-    if (touch && e.touches.length == 1) {
-      if (distance > 75) {
-        if (currentImage > 0) {
-          setCurrentImage(currentImage - 1);
-        }
-        console.log("right");
-      } else if (distance < -75) {
-        if (currentImage < image.length - 1) {
-          setCurrentImage(currentImage + 1);
-        }
+    if (distance > 75) {
+      if (currentImage > 0) {
+        setCurrentImage(currentImage - 1);
+      }
+      console.log("right");
+    } else if (distance < -75) {
+      if (currentImage < image.length - 1) {
+        setCurrentImage(currentImage + 1);
       }
     }
 
