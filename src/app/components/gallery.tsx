@@ -92,8 +92,8 @@ const CurrentImage = ({
         </div>
 
         <div className="absolute bottom-0 bg-whitetransparent w-full flex flex-col items-center justify-center">
-          <div className="text-center xl:w-6/12 block text-2xl">{name}</div>
-          <div className="text-center  xl:w-6/12 block">{description}</div>
+          <div className="text-center w-10/12 xl:w-6/12 block text-2xl">{name}</div>
+          <div className="text-center w-10/12 xl:w-6/12 block">{description}</div>
         </div>
       </div>
 
@@ -143,17 +143,18 @@ const CurrentImage = ({
 };
 
 const Images = ({ images, open, currentImage }: IImages) => {
+  const [imageLoaded, setImageLoaded] = useState<boolean>(false);
+
   useEffect(() => {
     images.map((img, i) => {
       const ctx = gsap.context(() => {
         const tl = gsap.timeline().from(`#item-${i}`, {
           yPercent: 100,
-          
         });
 
         ScrollTrigger.create({
           trigger: `#item-${i}`,
-          start: "top bottom", 
+          start: "top bottom",
           animation: tl,
         });
       });
@@ -163,22 +164,25 @@ const Images = ({ images, open, currentImage }: IImages) => {
   }, []);
 
   return (
-    <div className="text-white grid xl:grid-cols-3 md:grid-cols-2 gap-6 justify-stretch">
+    <div
+      hidden={!imageLoaded}
+      className="text-white grid xl:grid-cols-3 md:grid-cols-2 gap-6 justify-stretch"
+    >
       {images.map((img, i) => (
-        <div key={i} className="text-xl font-bold">
+        <div id={`item-${i}`} key={i} className="text-xl font-bold">
           <img
             onClick={() => {
               console.log("clicked");
               currentImage(i);
               open();
             }}
-            id={`item-${i}`}
             src={getUrl(img.asset._ref).url()}
             width={"100%"}
             height={"auto"}
             loading="lazy"
             decoding="async"
             style={{ display: "inline" }}
+            onLoad={() => setImageLoaded(true)}
           />
           {img.name}
         </div>
