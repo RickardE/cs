@@ -77,13 +77,13 @@ export default async function Page({ params }: Props) {
   const portableTextComponents: PortableTextComponents = {
     block: {
       h1: ({ children }) => (
-        <h1 className="text-7xl text-red py-4">{children}</h1>
+        <h1 className="text-5xl xl:text-7xl text-red py-4">{children}</h1>
       ),
       h2: ({ children }) => <h2 className="text-5xl text-red">{children}</h2>,
       h3: ({ children }) => <h3 className="text-3xl text-red">{children}</h3>,
       h4: ({ children }) => <h4 className="text-xl text-red">{children}</h4>,
       normal: ({ children }) => (
-        <div className="xl:w-6/12 sm:w-10/12 md:w-10/12 block text-lg leading-10 text-mistyrose pr-6">
+        <div className="xl:w-6/12 sm:w-10/12 md:w-10/12 block text-sm lg:text-lg xl:text-lg sm:text-xs leading-7 xl:leading-10 text-mistyrose pr-6">
           {children}
         </div>
       ),
@@ -108,7 +108,10 @@ export default async function Page({ params }: Props) {
           );
         case "background":
           return (
-            <div key={i} className="h-auto min-h-screen w-full flex flex-column items-center border-b border-red text-mistyrose">
+            <div
+              key={i}
+              className="h-auto min-h-screen w-full flex flex-column items-center border-b border-red text-mistyrose"
+            >
               <p>{c.link}</p>
             </div>
           );

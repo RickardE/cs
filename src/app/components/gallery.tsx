@@ -3,6 +3,10 @@
 import { TouchEvent, useEffect, useRef, useState } from "react";
 import imageUrlBuilder from "@sanity/image-url";
 import client from "@/lib/client";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/dist/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const imageBuilder = imageUrlBuilder(client);
 const getUrl = (ref: string) => {
@@ -88,8 +92,8 @@ const CurrentImage = ({
         </div>
 
         <div className="absolute bottom-0 bg-whitetransparent w-full flex flex-col items-center justify-center">
-          <div className="text-center w-6/12 block text-2xl">{name}</div>
-          <div className="text-center w-6/12 block">{description}</div>
+          <div className="text-center xl:w-6/12 block text-2xl">{name}</div>
+          <div className="text-center  xl:w-6/12 block">{description}</div>
         </div>
       </div>
 
@@ -98,7 +102,10 @@ const CurrentImage = ({
           closeInfo ? "xl:invisible" : "xl:visible"
         }`}
       >
-        <div>Använd pilarna på tagentbordet för att bläddra</div>
+        <div className="text-xl bg-blacktransparent p-4">
+          Använd pilarna på tagentbordet för att bläddra och [ESC] för att gå
+          tillbaka.
+        </div>
         <div className="absolute top-0 right-10">
           <div className="bg-[url('/images/close.svg')] w-8 h-8 bg-no-repeat"></div>
         </div>
@@ -136,15 +143,36 @@ const CurrentImage = ({
 };
 
 const Images = ({ images, open, currentImage }: IImages) => {
+  useEffect(() => {
+    images.map((img, i) => {
+      const ctx = gsap.context(() => {
+        const tl = gsap.timeline().from(`#item-${i}`, {
+          yPercent: 100,
+          
+        });
+
+        ScrollTrigger.create({
+          trigger: `#item-${i}`,
+          start: "top bottom", 
+          animation: tl,
+        });
+      });
+
+      return () => ctx.kill();
+    });
+  }, []);
+
   return (
     <div className="text-white grid xl:grid-cols-3 md:grid-cols-2 gap-6 justify-stretch">
       {images.map((img, i) => (
         <div key={i} className="text-xl font-bold">
           <img
             onClick={() => {
-              open();
+              console.log("clicked");
               currentImage(i);
+              open();
             }}
+            id={`item-${i}`}
             src={getUrl(img.asset._ref).url()}
             width={"100%"}
             height={"auto"}
@@ -166,8 +194,6 @@ const Gallery = ({ image }: IProps) => {
   const [clicks, setClicks] = useState<number>(0);
   const [touch, setTouch] = useState<boolean>(false);
   const [startX, setStartX] = useState<number>(0);
-  const [endX, setEndX] = useState<number>(0);
-  const [el, setEl] = useState<HTMLImageElement>();
 
   const handleTouchStart = (e: TouchEvent) => {
     setTouch(true);
@@ -274,9 +300,6 @@ const Gallery = ({ image }: IProps) => {
               ></CurrentImage>
             )
         )}
-        Bild: {currentImage}
-        <br />
-        Clicks {clicks}
       </div>
     );
   }
