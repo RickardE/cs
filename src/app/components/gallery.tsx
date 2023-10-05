@@ -233,6 +233,7 @@ const Gallery = ({ image }: IProps) => {
     }
 
     setTouch(false);
+    setIsPin(false);
   };
 
   const increaseClicks = () => {
