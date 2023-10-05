@@ -53,14 +53,15 @@ const CurrentImage = ({
   asset,
   name,
   description,
-  open,
   close,
+  open,
   closeInfo,
   onTouchStart,
   onTouchMove,
   onTouchEnd,
 }: CurrentImage) => {
   const [loading, setLoading] = useState<boolean>(true);
+  const [hideDesc, setHideDesc] = useState<boolean>(false);
 
   useEffect(() => {
     setLoading(false);
@@ -73,6 +74,47 @@ const CurrentImage = ({
       }`}
     >
       <div className="relative h-full w-full overflow-hidden flex flex-col justify-center items-center">
+        <div
+          onClick={() => close()}
+          className="absolute right-8 top-8 xl:invisible"
+        >
+          <svg
+            fill="#000000"
+            height="50px"
+            width="50px"
+            version="1.1"
+            id="Layer_1"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="-143.36 -143.36 798.72 798.72"
+            stroke="#000000"
+            stroke-width="0.00512"
+          >
+            <g id="SVGRepo_bgCarrier" stroke-width="0">
+              <rect
+                x="-143.36"
+                y="-143.36"
+                width="798.72"
+                height="798.72"
+                rx="399.36"
+                fill="#ffffff"
+              ></rect>
+            </g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke="#CCCCCC"
+              stroke-width="10.24"
+            ></g>
+            <g id="SVGRepo_iconCarrier">
+              <g>
+                <g>
+                  <polygon points="512,59.076 452.922,0 256,196.922 59.076,0 0,59.076 196.922,256 0,452.922 59.076,512 256,315.076 452.922,512 512,452.922 315.076,256 "></polygon>{" "}
+                </g>
+              </g>
+            </g>
+          </svg>
+        </div>
         <img
           hidden={loading}
           className="w-full h-full mx-auto object-cover"
@@ -91,11 +133,20 @@ const CurrentImage = ({
           <img src={"/images/spinner.svg"} />
         </div>
 
-        <div className="absolute bottom-0 bg-whitetransparent w-full flex flex-col items-center justify-center">
+        <div
+          onClick={() => setHideDesc(!hideDesc)}
+          className={`absolute bottom-0 bg-whitetransparent w-full flex flex-col items-center justify-center transition-all ${
+            hideDesc ? "-bottom-[8%]" : "bottom-0"
+          }`}
+        >
+          <div className="absolute top-0 right-24 block">
+            <img className={`${hideDesc ? "visible" : "invisible"}`} src="/images/up-arrow.svg" />
+            <img className={`${hideDesc ? "invisible" : "visible"}`}  src="/images/down-arrow.svg" />
+          </div>
           <div className="text-center w-10/12 xl:w-6/12 block text-2xl">
             {name}
           </div>
-          <div className="text-center w-10/12 xl:w-6/12 block">
+          <div className={`text-center w-10/12 xl:w-6/12 block`}>
             {description}
           </div>
         </div>
@@ -154,11 +205,12 @@ const Images = ({ images, open, currentImage }: IImages) => {
       const ctx = gsap.context(() => {
         const tl = gsap.timeline().from(`#item-${i}`, {
           yPercent: 100,
+          delay: 0.2,
         });
 
         ScrollTrigger.create({
           trigger: `#item-${i}`,
-          start: "top bottom",
+          start: "top 140%",
           animation: tl,
         });
       });
@@ -173,22 +225,44 @@ const Images = ({ images, open, currentImage }: IImages) => {
       className="text-white grid xl:grid-cols-3 md:grid-cols-2 gap-6 justify-stretch"
     >
       {images.map((img, i) => (
-        <div id={`item-${i}`} key={i} className="text-xl font-bold">
-          <img
-            onClick={() => {
-              console.log("clicked");
-              currentImage(i);
-              open();
-            }}
-            src={getUrl(img.asset._ref).url()}
-            width={"100%"}
-            height={"auto"}
-            loading="lazy"
-            decoding="async"
-            style={{ display: "inline" }}
-            onLoad={() => setImageLoaded(true)}
-          />
-          {img.name}
+        <div
+          id={`item-${i}`}
+          key={i}
+          className="relative group/image cursor-pointer"
+        >
+          <div className="h-auto relative">
+            <img
+              className="relative h-fit w-fit"
+              onClick={() => {
+                currentImage(i);
+                open();
+              }}
+              src={getUrl(img.asset._ref).url()}
+              width={"100%"}
+              height={"auto"}
+              loading="lazy"
+              decoding="async"
+              style={{ display: "inline" }}
+              onLoad={() => setImageLoaded(true)}
+            />
+
+            <div
+              onClick={() => {
+                currentImage(i);
+                open();
+              }}
+              className="text-xl font-bold opacity-0 absolute left-0 right-0 top-0 bottom-0 w-full h-full bg-blacktransparent group-hover/image:opacity-100 transition-all flex flex-col items-center justify-center"
+            >
+              <img
+                loading="lazy"
+                decoding="async"
+                src="/images/resize.svg"
+              ></img>
+            </div>
+
+            <div className="clear-both"></div>
+          </div>
+          <p>{img.name}</p>
         </div>
       ))}
     </div>
@@ -211,7 +285,6 @@ const Gallery = ({ image }: IProps) => {
       setIsPin(false);
     }
 
-    console.log(e.touches[0].clientY);
     setStartX(e.touches[0].clientX);
   };
 
