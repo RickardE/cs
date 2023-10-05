@@ -202,30 +202,37 @@ const Gallery = ({ image }: IProps) => {
   const [clicks, setClicks] = useState<number>(0);
   const [touch, setTouch] = useState<boolean>(false);
   const [startX, setStartX] = useState<number>(0);
+  const [isPin, setIsPin] = useState<boolean>(false);
 
   const handleTouchStart = (e: TouchEvent) => {
-    if (e.touches.length === 1) {
-      setStartX(e.touches[0].clientX);
+    if (e.touches.length > 1) {
+      setIsPin(true);
     }
+
+    console.log(e.touches[0].clientY);
+    setStartX(e.touches[0].clientX);
   };
 
-  const handleTouchMove = (e: TouchEvent) => {};
+  const handleTouchMove = (e: TouchEvent) => {
+    console.log(e.touches);
+  };
 
   const handleTouchEnd = (e: TouchEvent) => {
-    const distance = e.changedTouches[0].clientX - startX;
+    if (!isPin) {
+      const distance = e.changedTouches[0].clientX - startX;
 
-    if (distance > 75) {
-      if (currentImage > 0) {
-        setCurrentImage(currentImage - 1);
+      if (distance > 75) {
+        if (currentImage > 0) {
+          setCurrentImage(currentImage - 1);
+        }
+      } else if (distance < -75) {
+        if (currentImage < image.length - 1) {
+          setCurrentImage(currentImage + 1);
+        }
       }
-      console.log("right");
-    } else if (distance < -75) {
-      if (currentImage < image.length - 1) {
-        setCurrentImage(currentImage + 1);
-      }
+
+      setTouch(false);
     }
-
-    setTouch(false);
   };
 
   const increaseClicks = () => {
