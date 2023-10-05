@@ -207,6 +207,8 @@ const Gallery = ({ image }: IProps) => {
   const handleTouchStart = (e: TouchEvent) => {
     if (e.touches.length > 1) {
       setIsPin(true);
+    } else {
+      setIsPin(false);
     }
 
     console.log(e.touches[0].clientY);
@@ -233,7 +235,6 @@ const Gallery = ({ image }: IProps) => {
     }
 
     setTouch(false);
-    setIsPin(false);
   };
 
   const increaseClicks = () => {
