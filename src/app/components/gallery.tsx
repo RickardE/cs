@@ -230,9 +230,9 @@ const Gallery = ({ image }: IProps) => {
           setCurrentImage(currentImage + 1);
         }
       }
-
-      setTouch(false);
     }
+
+    setTouch(false);
   };
 
   const increaseClicks = () => {
