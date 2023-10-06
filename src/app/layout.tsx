@@ -14,6 +14,7 @@ type Logo = {
 type Page = {
   pageTitle: string;
   pageSlug: string;
+  pageName: string;
   order: number;
 };
 
