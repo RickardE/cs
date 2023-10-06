@@ -83,7 +83,7 @@ const CurrentImage = ({
 
         <div
           onClick={() => close()}
-          className={"absolute right-8 top-10 cursor-pointer"}
+          className={"absolute top-10 right-8 cursor-pointer"}
         >
           <img src="/images/close.svg" />
         </div>
