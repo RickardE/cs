@@ -69,11 +69,11 @@ const CurrentImage = ({
 
   return (
     <div
-      className={`text-black fixed overflow-scroll w-full z-40 bg-white top-0 bottom-0 left-0 right-0 flex flex-col items-center ${
+      className={`text-black fixed overflow-scroll h-full w-full z-40 bg-white top-0 bottom-0 left-0 right-0 flex flex-col items-center ${
         open ? "block" : "hidden"
       }`}
     >
-      <div className="relative h-auto w-full overflow-hidden flex flex-col justify-center items-center">
+      <div className="relative h-full w-full overflow-hidden flex flex-col justify-center items-center">
         <div
           onClick={() => close()}
           className="absolute right-8 top-8 xl:invisible"
@@ -230,11 +230,11 @@ const Images = ({ images, open, currentImage }: IImages) => {
         <div
           id={`item-${i}`}
           key={i}
-          className="relative group/image cursor-pointer"
+          className="relative h-full w-auto relative group/image cursor-pointer"
         >
-          <div className="h-auto relative">
+          <div className="h-full w-auto relative">
             <img
-              className="relative h-fit w-fit"
+              className="relative h-full w-auto relative"
               onClick={() => {
                 currentImage(i);
                 open();
