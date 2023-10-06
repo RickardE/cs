@@ -83,10 +83,11 @@ const CurrentImage = ({
 
         <div
           onClick={() => close()}
-          className="absolute right-8 top-10 xl:invisible cursor-pointer"
+          className={"absolute right-8 top-10 cursor-pointer"}
         >
           <img src="/images/close.svg" />
         </div>
+
         <img
           hidden={loading}
           className="w-full h-full mx-auto object-cover"
@@ -108,7 +109,7 @@ const CurrentImage = ({
         <div
           onClick={() => setHideDesc(!hideDesc)}
           className={`absolute bottom-0 bg-whitetransparent w-full h-auto flex flex-col items-center justify-center transition-all ${
-            hideDesc ? "-bottom-[100vh]" : "bottom-0"
+            hideDesc ? "translate-y-full" : "-translate-y-0"
           }`}
         >
           <div className="text-center w-10/12 xl:w-6/12 block text-2xl">
@@ -128,9 +129,6 @@ const CurrentImage = ({
         <div className="text-xl bg-blacktransparent p-4">
           Använd pilarna på tagentbordet för att bläddra och [ESC] för att gå
           tillbaka.
-        </div>
-        <div className="absolute top-0 right-10">
-          <div className="bg-[url('/images/close.svg')] w-8 h-8 bg-no-repeat"></div>
         </div>
 
         <svg
