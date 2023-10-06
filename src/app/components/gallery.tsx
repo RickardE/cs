@@ -230,11 +230,11 @@ const Images = ({ images, open, currentImage }: IImages) => {
         <div
           id={`item-${i}`}
           key={i}
-          className="relative h-full w-auto relative group/image cursor-pointer"
+          className="relative max-h-full w-auto relative group/image cursor-pointer"
         >
-          <div className="h-auto w-100 relative">
+          <div className="h-auto max-h-full w-100 relative">
             <img
-              className="relative h-full w-auto relative"
+              className="relative h-auto  w-auto  max-h-fullrelative"
               onClick={() => {
                 currentImage(i);
                 open();
