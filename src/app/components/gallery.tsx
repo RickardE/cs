@@ -47,6 +47,8 @@ interface CurrentImage extends IImage {
   onTouchStart: (e: TouchEvent) => void;
   onTouchMove: (e: TouchEvent) => void;
   onTouchEnd: (e: TouchEvent) => void;
+  nr: number;
+  total: number;
 }
 
 const CurrentImage = ({
@@ -59,10 +61,11 @@ const CurrentImage = ({
   onTouchStart,
   onTouchMove,
   onTouchEnd,
+  nr,
+  total,
 }: CurrentImage) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [hideDesc, setHideDesc] = useState<boolean>(false);
-
   useEffect(() => {
     setLoading(false);
   }, []);
@@ -76,14 +79,20 @@ const CurrentImage = ({
       <div className="relative h-full w-full overflow-hidden flex flex-col justify-center items-center">
         <div
           onClick={() => setHideDesc(!hideDesc)}
-          className={`absolute top-10 left-10 cursor-pointer`}
+          className={`absolute top-10 left-10 cursor-pointer z-10`}
         >
           <img src="/images/info.svg" />
         </div>
 
+        <div className="absolute top-10 left-0 right-0 text-center">
+          <p className="bg-whitetransparent inline-block px-4 py-2">
+            {nr} / {total}
+          </p>
+        </div>
+
         <div
           onClick={() => close()}
-          className={"absolute top-10 right-8 cursor-pointer"}
+          className={"absolute top-10 right-8 cursor-pointer z-10"}
         >
           <img src="/images/close.svg" />
         </div>
@@ -107,28 +116,27 @@ const CurrentImage = ({
         </div>
 
         <div
-          onClick={() => setHideDesc(!hideDesc)}
           className={`absolute bottom-0 bg-whitetransparent w-full h-auto flex flex-col items-center justify-center transition-all ${
             hideDesc ? "translate-y-full" : "-translate-y-0"
           }`}
         >
-          <div className="text-center w-10/12 xl:w-6/12 block text-2xl">
+          <div className="text-center py-4 w-10/12 xl:w-6/12 block text-2xl">
             {name}
           </div>
-          <div className={`text-center w-10/12 xl:w-6/12 block`}>
+          <div className={`text-center pb-4 w-10/12 xl:w-6/12 block`}>
             {description}
           </div>
         </div>
       </div>
 
       <div
-        className={`invisible absolute w-full h-full bg-blacktransparent top-0 bottom-0 left-0 right-0 text-white transition-all flex flex-col items-center justify-center ${
-          closeInfo ? "xl:invisible" : "xl:visible"
+        className={`invisible min-[1195px]:visible absolute w-full h-full bg-blacktransparent top-0 bottom-0 left-0 right-0 text-white transition-all flex flex-col items-center justify-center ${
+          closeInfo ? "min-[1195px]:invisible" : "min-[1195px]:visible"
         }`}
       >
         <div className="text-xl bg-blacktransparent p-4">
-          Använd pilarna på tagentbordet för att bläddra och [ESC] för att gå
-          tillbaka.
+          Använd pilarna på tagentbordet för att bläddra och [ESC] för att
+          stänga bilden.
         </div>
 
         <svg
@@ -365,6 +373,8 @@ const Gallery = ({ image }: IProps) => {
                 name={img.name}
                 description={img.description}
                 asset={img.asset}
+                nr={i + 1}
+                total={image.length}
               ></CurrentImage>
             )
         )}
