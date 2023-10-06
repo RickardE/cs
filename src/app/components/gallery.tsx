@@ -165,6 +165,15 @@ const CurrentImage = ({
 
 const Images = ({ images, open, currentImage }: IImages) => {
   const [imageLoaded, setImageLoaded] = useState<boolean>(false);
+  const [nrOfImages, setnrOfImages] = useState<number>(0);
+
+  const loadImages = () => {
+    setnrOfImages((nrOfImages) => nrOfImages + 1);
+
+    if (nrOfImages === images.length) {
+      setImageLoaded(true);
+    }
+  };
 
   useEffect(() => {
     images.map((img, i) => {
@@ -209,7 +218,9 @@ const Images = ({ images, open, currentImage }: IImages) => {
               loading="lazy"
               decoding="async"
               style={{ display: "inline" }}
-              onLoad={() => setImageLoaded(true)}
+              onLoad={(e) => {
+                loadImages();
+              }}
             />
 
             <div
