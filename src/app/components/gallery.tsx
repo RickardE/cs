@@ -108,14 +108,9 @@ const CurrentImage = ({
         <div
           onClick={() => setHideDesc(!hideDesc)}
           className={`absolute bottom-0 bg-whitetransparent w-full h-auto flex flex-col items-center justify-center transition-all ${
-            hideDesc ? "-bottom-[100%]" : "bottom-0"
+            hideDesc ? "-bottom-[100vh]" : "bottom-0"
           }`}
         >
-          <div
-            className={`absolute top-0 bottom-0 h-auto right-24 block flex flex-col ${
-              hideDesc ? "xl:justify-top" : "xl:justify-center"
-            } `}
-          ></div>
           <div className="text-center w-10/12 xl:w-6/12 block text-2xl">
             {name}
           </div>
