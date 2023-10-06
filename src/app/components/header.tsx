@@ -116,7 +116,7 @@ const Header = ({ nav, url }: IProps) => {
                 ))}
           </div>
         </div>
-        <div className="block absolute bottom-48 text-center w-full">
+        <div className="block absolute bottom-[15vh] text-center w-full">
           <a href={"mailto:cecila@sandmans.se"}>cecilia@sandmans.se</a>
         </div>
       </nav>
