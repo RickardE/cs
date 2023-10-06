@@ -73,7 +73,7 @@ const CurrentImage = ({
         open ? "block" : "hidden"
       }`}
     >
-      <div className="relative h-full w-full overflow-hidden flex flex-col justify-center items-center">
+      <div className="relative h-auto w-full overflow-hidden flex flex-col justify-center items-center">
         <div
           onClick={() => close()}
           className="absolute right-8 top-8 xl:invisible"
@@ -83,13 +83,11 @@ const CurrentImage = ({
             height="50px"
             width="50px"
             version="1.1"
-            id="Layer_1"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="-143.36 -143.36 798.72 798.72"
             stroke="#000000"
-            stroke-width="0.00512"
           >
-            <g id="SVGRepo_bgCarrier" stroke-width="0">
+            <g>
               <rect
                 x="-143.36"
                 y="-143.36"
@@ -99,14 +97,8 @@ const CurrentImage = ({
                 fill="#ffffff"
               ></rect>
             </g>
-            <g
-              id="SVGRepo_tracerCarrier"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke="#CCCCCC"
-              stroke-width="10.24"
-            ></g>
-            <g id="SVGRepo_iconCarrier">
+            <g></g>
+            <g>
               <g>
                 <g>
                   <polygon points="512,59.076 452.922,0 256,196.922 59.076,0 0,59.076 196.922,256 0,452.922 59.076,512 256,315.076 452.922,512 512,452.922 315.076,256 "></polygon>{" "}
@@ -136,12 +128,22 @@ const CurrentImage = ({
         <div
           onClick={() => setHideDesc(!hideDesc)}
           className={`absolute bottom-0 bg-whitetransparent w-full flex flex-col items-center justify-center transition-all ${
-            hideDesc ? "-bottom-[8%]" : "bottom-0"
+            hideDesc ? "-bottom-[4%]" : "bottom-0"
           }`}
         >
-          <div className="absolute top-0 right-24 block">
-            <img className={`${hideDesc ? "visible" : "invisible"}`} src="/images/up-arrow.svg" />
-            <img className={`${hideDesc ? "invisible" : "visible"}`}  src="/images/down-arrow.svg" />
+          <div
+            className={`absolute top-0 bottom-0 h-auto right-24 block flex flex-col ${
+              hideDesc ? "justify-top" : "justify-center"
+            } `}
+          >
+            <img
+              className={`${hideDesc ? "block" : "hidden"}`}
+              src="/images/up-arrow.svg"
+            />
+            <img
+              className={`${hideDesc ? "hidden" : "block"}`}
+              src="/images/down-arrow.svg"
+            />
           </div>
           <div className="text-center w-10/12 xl:w-6/12 block text-2xl">
             {name}
