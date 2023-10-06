@@ -232,7 +232,7 @@ const Images = ({ images, open, currentImage }: IImages) => {
           key={i}
           className="relative h-full w-auto relative group/image cursor-pointer"
         >
-          <div className="h-full w-auto relative">
+          <div className="h-auto w-100 relative">
             <img
               className="relative h-full w-auto relative"
               onClick={() => {
