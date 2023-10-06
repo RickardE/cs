@@ -218,7 +218,7 @@ const Images = ({ images, open, currentImage }: IImages) => {
               loading="lazy"
               decoding="async"
               style={{ display: "inline" }}
-              onLoad={(e) => {
+              onLoad={() => {
                 loadImages();
               }}
             />

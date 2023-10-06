@@ -13,6 +13,7 @@ type Block = {
 };
 
 type Page = {
+  pageName: string;
   pageTitle: string;
   pageBuilder: {
     _type: string;
@@ -72,7 +73,7 @@ export default async function Page({ params }: Props) {
       h3: ({ children }) => <h3 className="text-3xl text-red">{children}</h3>,
       h4: ({ children }) => <h4 className="text-xl text-red">{children}</h4>,
       normal: ({ children }) => (
-        <div className="xl:w-6/12 sm:w-10/12 md:w-10/12 block text-sm lg:text-lg xl:text-lg sm:text-xs leading-7 xl:leading-10 text-mistyrose pr-6">
+        <div className="leading-6 xl:w-6/12 sm:w-10/12 md:w-10/12 block text-sm md:text-lg lg:text-lg xl:text-lg sm:text-sm text-mistyrose pr-6">
           {children}
         </div>
       ),

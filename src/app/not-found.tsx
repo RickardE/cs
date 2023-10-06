@@ -1,15 +1,15 @@
-import Link from 'next/link'
-import type { Metadata } from 'next'
+import Link from "next/link";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Sidan finns ej'
-}
+  title: "Sidan finns ej",
+};
 
-export default function NotFound() {
-  return <div>
-      <h1>Not found – 404!</h1>
-      <div>
-        <Link href="/">Go back to Home</Link>
-      </div>
-  </div>
+export default function NotFoundPage() {
+  return (
+    <div className="bg-blag h-screen w-screen flex flex-col items-center justify-center">
+      <h1 className="text-3xl text-red">404 - Not found</h1>
+      <Link className="text-white mt-4 hover:underline" href={"/"}>Tillbaka till startsidan</Link>
+    </div>
+  );
 }

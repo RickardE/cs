@@ -12,6 +12,7 @@ interface IProps {
   nav: {
     pageTitle: string;
     pageSlug: string;
+    pageName: string;
     order: number;
   }[];
 }
@@ -110,10 +111,13 @@ const Header = ({ nav, url }: IProps) => {
                     className="hover:underline block py-3"
                     href={`/${n.pageSlug}`}
                   >
-                    {n.pageTitle}
+                    {n.pageName}
                   </Link>
                 ))}
           </div>
+        </div>
+        <div className="block absolute bottom-10 text-center w-full">
+          <a href={"mailto:cecila@sandmans.se"}>cecilia@sandmans.se</a>
         </div>
       </nav>
       <div className="clear-both"></div>
