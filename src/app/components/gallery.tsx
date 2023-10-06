@@ -69,43 +69,23 @@ const CurrentImage = ({
 
   return (
     <div
-      className={`text-black fixed overflow-scroll h-full w-full z-40 bg-white top-0 bottom-0 left-0 right-0 flex flex-col items-center ${
+      className={`text-black fixed overflow-hidden h-full w-full z-40 bg-white top-0 bottom-0 left-0 right-0 flex flex-col items-center ${
         open ? "block" : "hidden"
       }`}
     >
       <div className="relative h-full w-full overflow-hidden flex flex-col justify-center items-center">
         <div
-          onClick={() => close()}
-          className="absolute right-8 top-8 xl:invisible"
+          onClick={() => setHideDesc(!hideDesc)}
+          className={`absolute top-10 left-10 cursor-pointer`}
         >
-          <svg
-            fill="#000000"
-            height="50px"
-            width="50px"
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="-143.36 -143.36 798.72 798.72"
-            stroke="#000000"
-          >
-            <g>
-              <rect
-                x="-143.36"
-                y="-143.36"
-                width="798.72"
-                height="798.72"
-                rx="399.36"
-                fill="#ffffff"
-              ></rect>
-            </g>
-            <g></g>
-            <g>
-              <g>
-                <g>
-                  <polygon points="512,59.076 452.922,0 256,196.922 59.076,0 0,59.076 196.922,256 0,452.922 59.076,512 256,315.076 452.922,512 512,452.922 315.076,256 "></polygon>{" "}
-                </g>
-              </g>
-            </g>
-          </svg>
+          <img src="/images/info.svg" />
+        </div>
+
+        <div
+          onClick={() => close()}
+          className="absolute right-8 top-10 xl:invisible cursor-pointer"
+        >
+          <img src="/images/close.svg" />
         </div>
         <img
           hidden={loading}
@@ -127,24 +107,15 @@ const CurrentImage = ({
 
         <div
           onClick={() => setHideDesc(!hideDesc)}
-          className={`absolute bottom-0 bg-whitetransparent w-full flex flex-col items-center justify-center transition-all ${
-            hideDesc ? "-bottom-[4%]" : "bottom-0"
+          className={`absolute bottom-0 bg-whitetransparent w-full h-auto flex flex-col items-center justify-center transition-all ${
+            hideDesc ? "-bottom-[100%]" : "bottom-0"
           }`}
         >
           <div
             className={`absolute top-0 bottom-0 h-auto right-24 block flex flex-col ${
-              hideDesc ? "justify-top" : "justify-center"
+              hideDesc ? "xl:justify-top" : "xl:justify-center"
             } `}
-          >
-            <img
-              className={`${hideDesc ? "block" : "hidden"}`}
-              src="/images/up-arrow.svg"
-            />
-            <img
-              className={`${hideDesc ? "hidden" : "block"}`}
-              src="/images/down-arrow.svg"
-            />
-          </div>
+          ></div>
           <div className="text-center w-10/12 xl:w-6/12 block text-2xl">
             {name}
           </div>
@@ -234,7 +205,7 @@ const Images = ({ images, open, currentImage }: IImages) => {
         >
           <div className="h-auto max-h-full w-100 relative">
             <img
-              className="relative h-auto  w-auto  max-h-fullrelative"
+              className="relative h-auto w-auto max-h-full relative"
               onClick={() => {
                 currentImage(i);
                 open();
@@ -290,9 +261,7 @@ const Gallery = ({ image }: IProps) => {
     setStartX(e.touches[0].clientX);
   };
 
-  const handleTouchMove = (e: TouchEvent) => {
-    console.log(e.touches);
-  };
+  const handleTouchMove = (e: TouchEvent) => {};
 
   const handleTouchEnd = (e: TouchEvent) => {
     if (!isPin) {
