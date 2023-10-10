@@ -3,13 +3,23 @@ import { notFound } from "next/navigation";
 import type { ResolvingMetadata, Metadata } from "next";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
 import { revalidatePath } from "next/cache";
-import Gallery from "./components/gallery";
+import imageUrlBuilder from "@sanity/image-url";
+const imageBuilder = imageUrlBuilder(client);
+
+const getUrl = (ref: string) => {
+  return imageBuilder.image(ref);
+};
+
+type IImage = {
+  _ref: string;
+};
 
 type Block = {
   _type: string;
   children: { _type: string; marks: string[]; text: string }[];
   markDefs: { _key: string; _type: string; extraData: string }[];
   style: string;
+  asset: IImage[];
 };
 
 type Page = {
@@ -64,6 +74,10 @@ export default async function Page({ params }: Props) {
 
   const page = Page[0];
 
+  const CustomImage = () => {
+    return <img src=""></img>;
+  };
+
   const portableTextComponents: PortableTextComponents = {
     block: {
       h1: ({ children }) => (
@@ -76,6 +90,11 @@ export default async function Page({ params }: Props) {
         <div className="leading-6 xl:w-6/12 sm:w-10/12 md:w-10/12 block text-sm md:text-lg lg:text-lg xl:text-lg sm:text-sm text-mistyrose pr-6">
           {children}
         </div>
+      ),
+    },
+    types: {
+      image: ({ value }) => (
+        <img className="w-2/5 h-auto" src={getUrl(value.asset._ref).url()} />
       ),
     },
   };
@@ -110,7 +129,6 @@ export default async function Page({ params }: Props) {
           );
         default:
           return null;
-          break;
       }
     });
   };

@@ -5,6 +5,7 @@ import imageUrlBuilder from "@sanity/image-url";
 import client from "@/lib/client";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
+import React from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -43,10 +44,11 @@ interface IProps {
 interface CurrentImage extends IImage {
   open: boolean;
   close: () => void;
-  closeInfo: boolean;
   onTouchStart: (e: TouchEvent) => void;
   onTouchMove: (e: TouchEvent) => void;
   onTouchEnd: (e: TouchEvent) => void;
+  onClickNext: () => void;
+  onClickPrev: () => void;
   nr: number;
   total: number;
 }
@@ -57,18 +59,15 @@ const CurrentImage = ({
   description,
   close,
   open,
-  closeInfo,
   onTouchStart,
   onTouchMove,
   onTouchEnd,
   nr,
   total,
+  onClickNext,
+  onClickPrev,
 }: CurrentImage) => {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [hideDesc, setHideDesc] = useState<boolean>(false);
-  useEffect(() => {
-    setLoading(false);
-  }, []);
+  const [loaded, setLoaded] = useState<boolean>(true);
 
   return (
     <div
@@ -76,97 +75,79 @@ const CurrentImage = ({
         open ? "block" : "hidden"
       }`}
     >
-      <div className="relative h-full w-full overflow-hidden flex flex-col justify-center items-center">
+      {loaded ? (
         <div
-          onClick={() => setHideDesc(!hideDesc)}
-          className={`absolute top-10 left-10 cursor-pointer z-10`}
+          className={`relative h-full w-full max-w-2/5 overflow-hidden flex flex-col justify-center items-center`}
         >
-          <img src="/images/info.svg" />
-        </div>
+          <div className="flex flex-row items-center justify-between w-3/5 pb-3">
+            <div>
+              {nr} / {total} {loaded ? "true" : "false"}
+            </div>
 
-        <div className="absolute top-10 left-0 right-0 text-center">
-          <p className="bg-whitetransparent inline-block px-4 py-2">
-            {nr} / {total}
-          </p>
-        </div>
+            <div onClick={() => close()} className={"cursor-pointer"}>
+              <img src="/images/close.svg" />
+            </div>
+          </div>
 
+          <div className="max-w-[80%] max-h-[80%] relative">
+            <img
+              className="mx-auto max-h-full max-w-full object-cover"
+              src={getUrl(asset._ref).url()}
+              width={"auto"}
+              height={"auto"}
+              onTouchStart={(e) => onTouchStart(e)}
+              onTouchMove={(e) => onTouchMove(e)}
+              onTouchEnd={(e) => onTouchEnd(e)}
+            />
+          </div>
+
+          <div
+            className={`w-full h-auto flex flex-col items-center justify-center transition-all`}
+          >
+            <div className="text-center pb-1 pt-4 w-10/12 xl:w-6/12 block text-2xl">
+              {name}
+            </div>
+            <div className={`text-center pb-1 w-10/12 xl:w-6/12 block`}>
+              {description}
+            </div>
+          </div>
+          <div className="flex flex-row">
+            <div>
+              <img
+                onClick={() => onClickPrev()}
+                className="inline cursor-pointer"
+                height={"100%"}
+                width={"100%"}
+                src="/images/left-arrow.svg"
+              />
+            </div>
+            <div>
+              <img
+                onClick={() => onClickNext()}
+                className="inline cursor-pointer"
+                height={"100%"}
+                width={"100%"}
+                src="/images/right-arrow.svg"
+              />
+            </div>
+          </div>
+        </div>
+      ) : (
         <div
-          onClick={() => close()}
-          className={"absolute top-10 right-8 cursor-pointer z-10"}
+          hidden={loaded ? true : false}
+          className="absolute w-full h-full bg-whitetransparent z-30 flex flex-col justify-center items-center"
         >
-          <img src="/images/close.svg" />
-        </div>
-
-        <img
-          hidden={loading}
-          className="w-full h-full mx-auto object-cover"
-          src={getUrl(asset._ref).url()}
-          loading="lazy"
-          decoding="async"
-          width={"100%"}
-          height={"100%"}
-          onTouchStart={(e) => onTouchStart(e)}
-          onTouchMove={(e) => onTouchMove(e)}
-          onTouchEnd={(e) => onTouchEnd(e)}
-          onLoad={() => setLoading(false)}
-        />
-
-        <div hidden={!loading} className="absolute">
           <img src={"/images/spinner.svg"} />
         </div>
+      )}
 
-        <div
-          className={`absolute bottom-0 bg-whitetransparent w-full h-auto flex flex-col items-center justify-center transition-all ${
-            hideDesc ? "translate-y-full" : "-translate-y-0"
-          }`}
-        >
-          <div className="text-center py-4 w-10/12 xl:w-6/12 block text-2xl">
-            {name}
-          </div>
-          <div className={`text-center pb-4 w-10/12 xl:w-6/12 block`}>
-            {description}
-          </div>
-        </div>
-      </div>
-
-      <div
-        className={`invisible min-[1195px]:visible absolute w-full h-full bg-blacktransparent top-0 bottom-0 left-0 right-0 text-white transition-all flex flex-col items-center justify-center ${
-          closeInfo ? "min-[1195px]:invisible" : "min-[1195px]:visible"
-        }`}
-      >
-        <div className="text-xl bg-blacktransparent p-4">
-          Använd pilarna på tagentbordet för att bläddra och [ESC] för att
-          stänga bilden.
-        </div>
-
-        <svg
-          style={{ width: "50%", height: "50%" }}
-          xmlns="http://www.w3.org/2000/svg"
-          version="1.1"
-          x="0px"
-          y="0px"
-          viewBox="0 0 100 125"
-        >
-          <g>
-            <g>
-              <g>
-                <g>
-                  <g>
-                    <path d="M93,74.61V54.7c0-1.88-1.53-3.41-3.41-3.41H69.68c-1.88,0-3.41,1.53-3.41,3.41v19.91c0,1.88,1.53,3.41,3.41,3.41h19.91       C91.48,78.02,93,76.49,93,74.61z M80.63,67.48V65.4h-7.17c-0.41,0-0.75-0.34-0.75-0.75s0.34-0.75,0.75-0.75h7.17v-2.07       c0-0.41,0.44-0.66,0.79-0.46l4.89,2.82c0.35,0.2,0.35,0.71,0,0.92l-4.89,2.82C81.07,68.14,80.63,67.88,80.63,67.48z" />
-                  </g>
-                </g>
-              </g>
-              <g>
-                <g>
-                  <g>
-                    <path d="M7,54.7v19.91c0,1.88,1.53,3.41,3.41,3.41h19.91c1.88,0,3.41-1.53,3.41-3.41V54.7c0-1.88-1.53-3.41-3.41-3.41H10.41       C8.52,51.29,7,52.82,7,54.7z M19.37,61.83v2.07h7.17c0.41,0,0.75,0.34,0.75,0.75s-0.34,0.75-0.75,0.75h-7.17v2.07       c0,0.41-0.44,0.66-0.79,0.46l-4.89-2.82c-0.35-0.2-0.35-0.71,0-0.92l4.89-2.82C18.93,61.17,19.37,61.42,19.37,61.83z" />
-                  </g>
-                </g>
-              </g>
-            </g>
-          </g>
-        </svg>
-      </div>
+      <img
+        hidden
+        alt="test"
+        src={getUrl(asset._ref).url()}
+        onLoadStart={() => setLoaded(false)}
+        onLoad={() => setLoaded(true)}
+      />
     </div>
   );
 };
@@ -188,7 +169,7 @@ const Images = ({ images, open, currentImage }: IImages) => {
       const ctx = gsap.context(() => {
         const tl = gsap.timeline().from(`#item-${i}`, {
           yPercent: 100,
-          delay: 0.2,
+          delay: 0,
         });
 
         ScrollTrigger.create({
@@ -259,7 +240,6 @@ const Gallery = ({ image }: IProps) => {
   const [open, setOpen] = useState<boolean>(false);
   const [isButtonPressed, setIsButtonPressed] = useState<boolean>(false);
   const [clicks, setClicks] = useState<number>(0);
-  const [touch, setTouch] = useState<boolean>(false);
   const [startX, setStartX] = useState<number>(0);
   const [isPin, setIsPin] = useState<boolean>(false);
 
@@ -289,12 +269,6 @@ const Gallery = ({ image }: IProps) => {
         }
       }
     }
-
-    setTouch(false);
-  };
-
-  const increaseClicks = () => {
-    setClicks(clicks + 1);
   };
 
   const handleKeyUp = () => {
@@ -303,32 +277,28 @@ const Gallery = ({ image }: IProps) => {
 
   const handleKeyDown = (key: string) => {
     if (!isButtonPressed && open) {
-      increaseClicks();
+      switch (key) {
+        case "Escape":
+          setOpen(false);
+          setIsButtonPressed(true);
+          break;
 
-      if (clicks > 0) {
-        switch (key) {
-          case "Escape":
-            setOpen(false);
+        case "ArrowRight":
+          if (currentImage < image.length - 1) {
+            setCurrentImage(currentImage + 1);
             setIsButtonPressed(true);
-            break;
+          }
+          break;
 
-          case "ArrowRight":
-            if (currentImage < image.length - 1) {
-              setCurrentImage(currentImage + 1);
-              setIsButtonPressed(true);
-            }
-            break;
+        case "ArrowLeft":
+          if (currentImage > 0) {
+            setCurrentImage(currentImage - 1);
+            setIsButtonPressed(true);
+          }
+          break;
 
-          case "ArrowLeft":
-            if (currentImage > 0) {
-              setCurrentImage(currentImage - 1);
-              setIsButtonPressed(true);
-            }
-            break;
-
-          default:
-            break;
-        }
+        default:
+          break;
       }
     }
   };
@@ -341,7 +311,7 @@ const Gallery = ({ image }: IProps) => {
       document.removeEventListener("keydown", (e) => handleKeyDown(e.key));
       document.removeEventListener("keyup", () => handleKeyUp());
     };
-  }, [handleKeyDown, handleKeyUp, increaseClicks]);
+  }, [handleKeyDown, handleKeyUp]);
 
   useEffect(() => {
     open
@@ -366,7 +336,14 @@ const Gallery = ({ image }: IProps) => {
                 onTouchStart={(e) => handleTouchStart(e)}
                 onTouchEnd={(e) => handleTouchEnd(e)}
                 onTouchMove={(e) => handleTouchMove(e)}
-                closeInfo={clicks > 0 ? true : false}
+                onClickNext={() =>
+                  currentImage < image.length - 1
+                    ? setCurrentImage(currentImage + 1)
+                    : ""
+                }
+                onClickPrev={() =>
+                  currentImage > 0 ? setCurrentImage(currentImage - 1) : ""
+                }
                 close={() => setOpen(false)}
                 open={open}
                 key={i}
