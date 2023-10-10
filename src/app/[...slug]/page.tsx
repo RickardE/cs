@@ -65,7 +65,7 @@ export async function generateMetadata(
 
   if (page) {
     return {
-      title: page.pageTitle,
+      title: page.pageTitle + " -  Cecilia Sandman Art & Design Värmdö",
     };
   }
 
