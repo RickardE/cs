@@ -6,11 +6,23 @@ import CustomImage from "../components/image";
 import { revalidatePath } from "next/cache";
 import Gallery from "../components/gallery";
 
+import imageUrlBuilder from "@sanity/image-url";
+const imageBuilder = imageUrlBuilder(client);
+
+const getUrl = (ref: string) => {
+  return imageBuilder.image(ref);
+};
+
+type IImage = {
+  _ref: string;
+};
+
 type Block = {
   _type: string;
   children: { _type: string; marks: string[]; text: string }[];
   markDefs: { _key: string; _type: string; extraData: string }[];
   style: string;
+  asset: IImage[];
 };
 
 type Image = {
@@ -81,9 +93,14 @@ export default async function Page({ params }: Props) {
       h3: ({ children }) => <h3 className="text-3xl text-red">{children}</h3>,
       h4: ({ children }) => <h4 className="text-xl text-red">{children}</h4>,
       normal: ({ children }) => (
-        <div className="leading-6 xl:w-6/12 sm:w-10/12 md:w-10/12 block text-sm md:text-lg lg:text-lg xl:text-lg sm:text-sm text-mistyrose pr-6">
+        <p className="leading-6 xl:w-6/12 sm:w-10/12 md:w-10/12 block text-sm md:text-lg lg:text-lg xl:text-lg sm:text-sm text-mistyrose pr-6 py-3">
           {children}
-        </div>
+        </p>
+      ),
+    },
+    types: {
+      image: ({ value }) => (
+        <img className="w-1/5 h-auto" src={getUrl(value.asset._ref).url()} />
       ),
     },
   };

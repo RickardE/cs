@@ -100,7 +100,7 @@ const Header = ({ nav, url }: IProps) => {
         ref={el2}
       >
         <div className="relative w-10/12 mx-auto">
-          <div className="text-left text-3xl sm:text-4xl md:text-5xl lg:text-7xl flex flex-col items-center text-left">
+          <div className="text-left text-3xl sm:text-4xl md:text-5xl lg:text-7xl flex flex-col items-left text-left">
             {nav &&
               nav
                 .sort((a, b) => a.order - b.order)
@@ -115,10 +115,11 @@ const Header = ({ nav, url }: IProps) => {
                   </Link>
                 ))}
           </div>
-        </div>
-        <div className="block absolute bottom-[15vh] text-center w-full">
+          <div className="block absolute bottom-[-5vh] text-left w-full">
           <a href={"mailto:cecila@sandmans.se"}>cecilia@sandmans.se</a>
         </div>
+        </div>
+  
       </nav>
       <div className="clear-both"></div>
     </header>

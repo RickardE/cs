@@ -74,10 +74,6 @@ export default async function Page({ params }: Props) {
 
   const page = Page[0];
 
-  const CustomImage = () => {
-    return <img src=""></img>;
-  };
-
   const portableTextComponents: PortableTextComponents = {
     block: {
       h1: ({ children }) => (
@@ -87,14 +83,14 @@ export default async function Page({ params }: Props) {
       h3: ({ children }) => <h3 className="text-3xl text-red">{children}</h3>,
       h4: ({ children }) => <h4 className="text-xl text-red">{children}</h4>,
       normal: ({ children }) => (
-        <div className="leading-6 xl:w-6/12 sm:w-10/12 md:w-10/12 block text-sm md:text-lg lg:text-lg xl:text-lg sm:text-sm text-mistyrose pr-6">
+        <p className="leading-6 xl:w-6/12 sm:w-10/12 md:w-10/12 block text-sm md:text-lg lg:text-lg xl:text-lg sm:text-sm text-mistyrose pr-6 py-3">
           {children}
-        </div>
+        </p>
       ),
     },
     types: {
       image: ({ value }) => (
-        <img className="w-2/5 h-auto" src={getUrl(value.asset._ref).url()} />
+        <img className="w-1/5 h-auto" src={getUrl(value.asset._ref).url()} />
       ),
     },
   };
@@ -135,7 +131,7 @@ export default async function Page({ params }: Props) {
 
   if (page.pageBuilder && page.pageBuilder.length > 0) {
     return (
-      <div className="relative flex flex-col min-h-screen relative w-10/12 mx-auto">
+      <div className="relative flex flex-col min-h-screen relative w-10/12 mx-auto justify-center">
         {buildPage(page)}
       </div>
     );
