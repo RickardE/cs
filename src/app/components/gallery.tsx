@@ -81,7 +81,7 @@ const CurrentImage = ({
         >
           <div className="flex flex-row items-center justify-between w-3/5 pb-3">
             <div>
-              {nr} / {total} {loaded ? "true" : "false"}
+              {nr} / {total}
             </div>
 
             <div onClick={() => close()} className={"cursor-pointer"}>
@@ -89,7 +89,7 @@ const CurrentImage = ({
             </div>
           </div>
 
-          <div className="max-w-[80%] max-h-[80%] relative">
+          <div className="max-w-[70%] max-h-[70%] relative">
             <img
               className="mx-auto max-h-full max-w-full object-cover"
               src={getUrl(asset._ref).url()}
