@@ -77,10 +77,12 @@ export default async function Page({ params }: Props) {
   const portableTextComponents: PortableTextComponents = {
     block: {
       h1: ({ children }) => (
-        <h1 className="text-5xl xl:text-7xl text-red py-4">{children}</h1>
+        <h1 className="text-5xl  xl:text-7xl 2xl:text-7xl text-red py-4">
+          {children}
+        </h1>
       ),
-      h2: ({ children }) => <h2 className="text-5xl text-red">{children}</h2>,
-      h3: ({ children }) => <h3 className="text-3xl text-red">{children}</h3>,
+      h2: ({ children }) => <h2 className="text-4xl text-red">{children}</h2>,
+      h3: ({ children }) => <h3 className="text-2xl text-red">{children}</h3>,
       h4: ({ children }) => <h4 className="text-xl text-red">{children}</h4>,
       normal: ({ children }) => (
         <p className="leading-6 xl:w-6/12 sm:w-10/12 md:w-10/12 block text-sm md:text-lg lg:text-lg xl:text-lg sm:text-sm text-mistyrose pr-6 py-3">
@@ -90,7 +92,14 @@ export default async function Page({ params }: Props) {
     },
     types: {
       image: ({ value }) => (
-        <img className="w-1/5 h-auto" src={getUrl(value.asset._ref).url()} />
+        <div className="w-2/5">
+          <img
+            width={"auto"}
+            height={"auto"}
+            className="max-h-full max-h-full h-auto w-auto"
+            src={getUrl(value.asset._ref).url()}
+          />
+        </div>
       ),
     },
   };
@@ -104,7 +113,7 @@ export default async function Page({ params }: Props) {
           return (
             <div
               key={i}
-              className="h-auto min-h-screen py-8 w-full flex flex-column items-center border-b border-red"
+              className="h-auto min-h-full py-8 w-full flex flex-column items-center border-b border-red"
             >
               <div style={{ minHeight: "auto" }}>
                 <PortableText
@@ -118,7 +127,7 @@ export default async function Page({ params }: Props) {
           return (
             <div
               key={i}
-              className="h-auto min-h-screen w-full flex flex-column items-center border-b border-red text-mistyrose"
+              className="h-auto min-h-full w-full flex flex-column items-center border-b border-red text-mistyrose"
             >
               <p>{c.link}</p>
             </div>
@@ -131,7 +140,7 @@ export default async function Page({ params }: Props) {
 
   if (page.pageBuilder && page.pageBuilder.length > 0) {
     return (
-      <div className="relative flex flex-col min-h-screen relative w-10/12 mx-auto justify-center">
+      <div className="relative flex flex-col min-h-full relative w-10/12 mx-auto justify-center">
         {buildPage(page)}
       </div>
     );

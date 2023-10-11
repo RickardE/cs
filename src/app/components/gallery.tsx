@@ -228,7 +228,7 @@ const Images = ({ images, open, currentImage }: IImages) => {
 
             <div className="clear-both"></div>
           </div>
-          <p>{img.name}</p>
+          <p className="px-1 py-2 text-xl">{img.name}</p>
         </div>
       ))}
     </div>

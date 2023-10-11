@@ -40,7 +40,7 @@ export default async function RootLayout({
       <body className="bg-black">
         <Header nav={nav} url={logo[0].logotype.asset._ref} />
 
-        <div className="relative pt-[128px] min-h-full h-auto">
+        <div className="relative h-auto min-h-full pt-[138px] pb-[10px]">
           {children}
         </div>
 
