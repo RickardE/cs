@@ -2,6 +2,10 @@ import "./globals.css";
 import Header from "./components/header";
 import client from "@/lib/client";
 import Footer from "./components/footer";
+import { GoogleTagManager } from "@next/third-parties/google";
+
+
+
 
 type Logo = {
   logotype: {
@@ -38,6 +42,8 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className="bg-black">
+   
+      <GoogleTagManager gtmId="G-4EN7B9YG5M" />
         <Header nav={nav} url={logo[0].logotype.asset._ref} />
 
         <div className="relative h-auto min-h-full pt-[138px] pb-[10px]">
