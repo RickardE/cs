@@ -43,7 +43,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className="bg-black">
    
-      <GoogleTagManager gtmId="G-4EN7B9YG5M" />
+      <GoogleTagManager gtmId="G-TG6N9S5C4Q" />
         <Header nav={nav} url={logo[0].logotype.asset._ref} />
 
         <div className="relative h-auto min-h-full pt-[138px] pb-[10px]">
