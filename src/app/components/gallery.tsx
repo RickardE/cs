@@ -164,24 +164,24 @@ const Images = ({ images, open, currentImage }: IImages) => {
     }
   };
 
-  useEffect(() => {
-    images.map((img, i) => {
-      const ctx = gsap.context(() => {
-        const tl = gsap.timeline().from(`#item-${i}`, {
-          yPercent: 100,
-          delay: 0,
-        });
+  // useEffect(() => {
+  //   images.map((img, i) => {
+  //     const ctx = gsap.context(() => {
+  //       const tl = gsap.timeline().from(`#item-${i}`, {
+  //         yPercent: 1,
+  //         delay: 0,
+  //       });
 
-        ScrollTrigger.create({
-          trigger: `#item-${i}`,
-          start: "top 140%",
-          animation: tl,
-        });
-      });
+  //       ScrollTrigger.create({
+  //         trigger: `#item-${i}`,
+  //         start: "top 140%",
+  //         animation: tl,
+  //       });
+  //     });
 
-      return () => ctx.kill();
-    });
-  }, []);
+  //     return () => ctx.revert();
+  //   });
+  // }, []);
 
   return (
     <div

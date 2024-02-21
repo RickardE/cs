@@ -100,7 +100,7 @@ const Header = ({ nav, url }: IProps) => {
         ref={el2}
       >
         <div className="relative w-10/12 mx-auto">
-          <div className="text-left text-3xl sm:text-4xl md:text-5xl lg:text-7xl flex flex-col items-left text-left">
+          <div className="text-left text-2xl sm:text-3xl md:text-4xl lg:text-5xl flex flex-col items-left text-left">
             {nav &&
               nav
                 .sort((a, b) => a.order - b.order)

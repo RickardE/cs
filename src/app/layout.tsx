@@ -46,7 +46,7 @@ export default async function RootLayout({
       <GoogleTagManager gtmId="G-TG6N9S5C4Q" />
         <Header nav={nav} url={logo[0].logotype.asset._ref} />
 
-        <div className="relative h-auto min-h-full pt-[138px] pb-[10px]">
+        <div className="relative h-auto clear-both pt-[138px] pb-[10px]">
           {children}
         </div>
 

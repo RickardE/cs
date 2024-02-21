@@ -140,7 +140,7 @@ export default async function Page({ params }: Props) {
 
         case "gallery":
           return (
-            <div className="min-h-screen block" key={i}>
+            <div className="h-auto block" key={i}>
               <Gallery image={c.images}></Gallery>
             </div>
           );
